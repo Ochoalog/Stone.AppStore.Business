@@ -20,8 +20,4 @@
     <ProjectReference Include="..\Stone.AppStore.Business.Domain\Stone.AppStore.Business.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
 </Project>

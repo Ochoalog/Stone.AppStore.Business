@@ -18,5 +18,15 @@ namespace Stone.AppStore.Business.Domain
         public CreditCard CreditCard { get; set; }
 
         public PaymentMethodEnum PaymentMethod { get; set; }
+
+        public ResultConfirmationEnum ResultConfirmation { get; set; }
+
+        public string Message { get; set; }
+
+        public void SetResultConfirmation(ResultConfirmationEnum resultConfirmation) 
+            => ResultConfirmation = resultConfirmation;
+
+        public void SetMessage(string message) 
+            => Message = message;
     }
 }

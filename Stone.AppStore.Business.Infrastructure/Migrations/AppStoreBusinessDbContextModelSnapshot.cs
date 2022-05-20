@@ -66,7 +66,13 @@ namespace Stone.AppStore.Business.Infrastructure.Migrations
                     b.Property<Guid>("CreditCardId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("PaymentMethod")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ResultConfirmation")
                         .HasColumnType("int");
 
                     b.Property<Guid>("UserId")

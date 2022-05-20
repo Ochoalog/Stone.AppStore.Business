@@ -33,7 +33,9 @@ namespace Stone.AppStore.Business.Infrastructure.Migrations
                     AppId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreditCardId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PaymentMethod = table.Column<int>(type: "int", nullable: false)
+                    PaymentMethod = table.Column<int>(type: "int", nullable: false),
+                    ResultConfirmation = table.Column<int>(type: "int", nullable: false),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

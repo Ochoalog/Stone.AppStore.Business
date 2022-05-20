@@ -2,10 +2,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Stone.AppStore.Business.Application.ApiClientService.ClientFactory;
+using Stone.AppStore.Business.Application.Consumer;
+using Stone.AppStore.Business.Application.Mappings;
+using Stone.AppStore.Business.Application.Services;
+using Stone.AppStore.Business.Domain.Interfaces;
 using Stone.AppStore.Business.Infrastructure.Context;
+using Stone.AppStore.Business.Infrastructure.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Stone.AppStore.Business.IoC
 {
@@ -18,16 +22,17 @@ namespace Stone.AppStore.Business.IoC
              options.UseSqlServer(configuration.GetConnectionString("AppStoreBusinessConnection"),
              b => b.MigrationsAssembly(typeof(AppStoreBusinessDbContext).Assembly.FullName)));
 
-            //services.AddScoped<IAppRepository, AppRepository>();
-            //services.AddScoped<IAppService, AppService>();
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
 
-            //services.AddSingleton<IPaymentSender, PaymentSender>();
+            services.AddTransient<IPaymentService, PaymentService>();
 
+            services.AddAutoMapper(typeof(DomainToModelMappingProfile));
 
-            //services.AddAutoMapper(typeof(DomainToModelMappingProfile));
+            services.AddHttpClient();
 
-            var myhandlers = AppDomain.CurrentDomain.Load("Stone.AppStore.Business.Application");
-            services.AddMediatR(myhandlers);
+            services.AddTransient<PaymentConfirmationClientFactory>();
+
+            services.AddHostedService<PaymentConsumer>();
 
             return services;
         }

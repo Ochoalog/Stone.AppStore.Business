@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Stone.AppStore.Business.Application.ApiClientService.Configs;
+using Stone.AppStore.Business.Application.Options;
 using Stone.AppStore.Business.IoC;
 using System;
 using System.Collections.Generic;
@@ -21,13 +23,18 @@ namespace Stone.AppStore.Business.Service
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions();
+
+            var serviceClientSettingsConfig = Configuration.GetSection("RabbitMq");
+            services.Configure<RabbitMqConfiguration>(serviceClientSettingsConfig);
+
+            services.Configure<UrlConfig>(Configuration.GetSection("urls"));
+
             services.AddInfrastructure(Configuration);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -37,21 +44,10 @@ namespace Stone.AppStore.Business.Service
             else
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-
             app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapRazorPages();
-            });
         }
     }
 }

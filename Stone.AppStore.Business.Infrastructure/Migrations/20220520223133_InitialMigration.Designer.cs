@@ -10,7 +10,7 @@ using Stone.AppStore.Business.Infrastructure.Context;
 namespace Stone.AppStore.Business.Infrastructure.Migrations
 {
     [DbContext(typeof(AppStoreBusinessDbContext))]
-    [Migration("20220520164556_InitialMigration")]
+    [Migration("20220520223133_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,7 +68,13 @@ namespace Stone.AppStore.Business.Infrastructure.Migrations
                     b.Property<Guid>("CreditCardId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("PaymentMethod")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ResultConfirmation")
                         .HasColumnType("int");
 
                     b.Property<Guid>("UserId")
