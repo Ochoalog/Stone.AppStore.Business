@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Stone.AppStore.Business.Application.Models;
 using Stone.AppStore.Business.Domain;
+using Stone.AppStore.Business.Domain.Entities;
 
 namespace Stone.AppStore.Business.Application.Mappings
 {
@@ -9,6 +10,7 @@ namespace Stone.AppStore.Business.Application.Mappings
         public DomainToModelMappingProfile()
         {
             CreateMap<Payment, PaymentModel>().ReverseMap();
+            CreateMap<CreditCard, CreditCardModel>().ReverseMap();
         }
     }
 }

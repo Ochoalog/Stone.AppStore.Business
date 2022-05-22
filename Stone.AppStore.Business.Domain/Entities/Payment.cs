@@ -1,9 +1,7 @@
-﻿using Stone.AppStore.Business.Domain.Entities;
-using Stone.AppStore.Business.Domain.Enum;
+﻿using Stone.AppStore.Business.Domain.Enum;
 using System;
-using System.ComponentModel.DataAnnotations;
 
-namespace Stone.AppStore.Business.Domain
+namespace Stone.AppStore.Business.Domain.Entities
 {
     public class Payment
     {

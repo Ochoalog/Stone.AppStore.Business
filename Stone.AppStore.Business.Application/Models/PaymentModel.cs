@@ -7,6 +7,7 @@ namespace Stone.AppStore.Business.Application.Models
 {
     public class PaymentModel
     {
+        public Guid Id { get; set; }
         public Guid AppId { get; set; }
 
         public Guid UserId { get; set; }

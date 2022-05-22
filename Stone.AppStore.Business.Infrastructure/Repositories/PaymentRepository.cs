@@ -1,4 +1,5 @@
 ﻿using Stone.AppStore.Business.Domain;
+using Stone.AppStore.Business.Domain.Entities;
 using Stone.AppStore.Business.Domain.Interfaces;
 using Stone.AppStore.Business.Infrastructure.Context;
 using System;

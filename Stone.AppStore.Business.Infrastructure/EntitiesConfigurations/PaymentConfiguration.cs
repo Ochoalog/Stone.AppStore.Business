@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Stone.AppStore.Business.Domain;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Stone.AppStore.Business.Domain.Entities;
 
 namespace Stone.AppStore.Business.Infrastructure.EntitiesConfigurations
 {

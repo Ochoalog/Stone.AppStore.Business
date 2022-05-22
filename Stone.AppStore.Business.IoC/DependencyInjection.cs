@@ -24,13 +24,13 @@ namespace Stone.AppStore.Business.IoC
 
             services.AddScoped<IPaymentRepository, PaymentRepository>();
 
-            services.AddTransient<IPaymentService, PaymentService>();
-
             services.AddAutoMapper(typeof(DomainToModelMappingProfile));
 
             services.AddHttpClient();
 
             services.AddTransient<PaymentConfirmationClientFactory>();
+
+            services.AddTransient<IPaymentService, PaymentService>();
 
             services.AddHostedService<PaymentConsumer>();
 

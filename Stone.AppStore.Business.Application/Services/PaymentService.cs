@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Stone.AppStore.Business.Application.ApiClientService.ClientFactory;
 using Stone.AppStore.Business.Application.Models;
-using Stone.AppStore.Business.Domain;
+using Stone.AppStore.Business.Domain.Entities;
 using Stone.AppStore.Business.Domain.Enum;
 using Stone.AppStore.Business.Domain.Interfaces;
 using System;
@@ -12,14 +13,14 @@ namespace Stone.AppStore.Business.Application.Services
     public class PaymentService : IPaymentService
     {
         private readonly IMapper _mapper;
-        private readonly IPaymentRepository _paymentRepository;
+        private readonly IServiceProvider _serviceProvider;
         private readonly PaymentConfirmationClientFactory _paymentConfirmationClientFactory;
 
-        public PaymentService(IMapper mapper, IPaymentRepository paymentRepository, PaymentConfirmationClientFactory paymentConfirmationClientFactory)
+        public PaymentService(IMapper mapper, IServiceProvider serviceProvider, PaymentConfirmationClientFactory paymentConfirmationClientFactory)
         {
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            _paymentRepository = paymentRepository ?? throw new ArgumentNullException(nameof(paymentRepository));
-            _paymentConfirmationClientFactory = paymentConfirmationClientFactory ?? throw new ArgumentNullException(nameof(paymentConfirmationClientFactory));
+            _mapper = mapper;
+            _serviceProvider = serviceProvider;
+            _paymentConfirmationClientFactory = paymentConfirmationClientFactory;
         }
 
         public async void PaymentConfirmation(PaymentModel paymentModel)
@@ -55,9 +56,10 @@ namespace Stone.AppStore.Business.Application.Services
             }
             finally
             {
-                await _paymentRepository.CreateAsync(paymentEntity);
+                using var scope = _serviceProvider.CreateScope();
+                var paymentRepository = scope.ServiceProvider.GetRequiredService<IPaymentRepository>();
+                await paymentRepository.CreateAsync(paymentEntity);
             }
-
         }
 
         private void SetResultPaymentConfirmation(ResponsePaymentConfirmation response, Payment paymentEntity)
