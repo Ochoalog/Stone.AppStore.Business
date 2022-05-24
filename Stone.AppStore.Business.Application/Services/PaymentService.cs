@@ -43,8 +43,6 @@ namespace Stone.AppStore.Business.Application.Services
                 SetResultPaymentConfirmation(response, paymentEntity);
 
                 paymentEntity.SetMessage(response.Message);
-
-                Log.Logger.Information("Payment confirmed with Success!");
             }
             catch (Exception ex)
             {
@@ -56,9 +54,17 @@ namespace Stone.AppStore.Business.Application.Services
             }
             finally
             {
-                using var scope = _serviceProvider.CreateScope();
-                var paymentRepository = scope.ServiceProvider.GetRequiredService<IPaymentRepository>();
-                await paymentRepository.CreateAsync(paymentEntity);
+                if(paymentEntity.ResultConfirmation == ResultConfirmationEnum.Error)
+                {
+                    Log.Logger.Error("Credit card is not valid!");
+                }
+                else
+                {
+                    using var scope = _serviceProvider.CreateScope();
+                    var paymentRepository = scope.ServiceProvider.GetRequiredService<IPaymentRepository>();
+                    await paymentRepository.CreateAsync(paymentEntity);
+                    Log.Logger.Information("Payment confirmed with success!");
+                }
             }
         }
 
